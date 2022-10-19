@@ -27,9 +27,9 @@ public class Main {
 
         for (int i = 0; i < 10; i++) {
             userId id = new userId();
-            System.out.println(id.get());
             GenerateRandomString rndString = new GenerateRandomString(10);
-            User user = new User(rndString.get(), id.get(), true);
+            GenerateRandomBoolean rndBool = new GenerateRandomBoolean();
+            User user = new User(rndString.get(), id.get(), rndBool.get());
             usersHashMap.put(id, user);
         }
 
@@ -87,12 +87,10 @@ public class Main {
         return temp;
     }
 
-    public static int countActivatedUsers(List<User> lst)
-    {
+    public static int countActivatedUsers(List<User> lst) {
         int counter = 0;
-        for(User user: lst){
-            if(user.isActivated())
-            {
+        for (User user : lst) {
+            if (user.isActivated()) {
                 counter++;
             }
         }

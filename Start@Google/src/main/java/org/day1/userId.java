@@ -1,16 +1,18 @@
+package org.day1;
+
 import java.util.Random;
 
 public class userId {
     int id;
 
-    public userId(){
+    public userId() {
         Random rand = new Random();
 
         // random id will have 9 digits
-        id = rand.nextInt(999999999 - 900000000 ) + 100000000;
+        id = rand.nextInt(999999999 - 900000000) + 100000000;
     }
 
-    public int get(){
+    public int get() {
         return id;
     }
 }
