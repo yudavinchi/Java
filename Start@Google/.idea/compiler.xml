@@ -7,10 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="temp2" />
+        <module name="Start@Google" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Start@Google" target="9" />
       <module name="temp" target="9" />
     </bytecodeTargetLevel>
   </component>

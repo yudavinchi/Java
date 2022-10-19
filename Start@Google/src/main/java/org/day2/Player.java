@@ -1,24 +1,70 @@
 package org.day2;
 
+import java.io.FileNotFoundException;
+import java.util.Random;
+
 public class Player {
     String name;
-    int jerseyNum;
+    Integer jerseyNum = null;
     int grade;
-    Position pos;
+    Position pos = null;
 
     static NameGenerator nameGenerator;
 
-    public Player(String name, int jerseyNum, int grade){
+    public Player(String name, int grade){
         this.name = name;
-        this.jerseyNum = jerseyNum;
         this.grade = grade;
     }
 
-//    public Player(int jerseyNum, int grade){
-//        this(, jerseyNum, grade);
-//    }
+    public static Player createPlayerWithRandomName(int grade) throws FileNotFoundException {
+        String name = NameGenerator.createNameGeneratorWithoutInput().generateName();
+        return new Player(name, grade);
+    }
 
-    public void setPosition(Position pos){
+    public static Player createPlayerWithRandomGrade(String name)
+    {
+        Random rnd = new Random();
+        return new Player(name, rnd.nextInt(101));
+    }
+
+    public static Player createPlayerWithRandomData() throws FileNotFoundException {
+        String name = NameGenerator.createNameGeneratorWithoutInput().generateName();
+        Random rnd = new Random();
+
+        return new Player(name, rnd.nextInt(101));
+    }
+
+    public static Player createPlayerGoalKeeper() throws FileNotFoundException {
+        String name = NameGenerator.createNameGeneratorWithoutInput().generateName();
+        Random rnd = new Random();
+
+        return new Player(name, rnd.nextInt(101)).setPosition(Position.GOAL_KEEPER);
+    }
+
+    public static Player createPlayerAttacker() throws FileNotFoundException {
+        String name = NameGenerator.createNameGeneratorWithoutInput().generateName();
+        Random rnd = new Random();
+
+        return new Player(name, rnd.nextInt(101)).setPosition(Position.ATTACKER);
+    }
+
+    public static Player createPlayerMidfielder() throws FileNotFoundException {
+        String name = NameGenerator.createNameGeneratorWithoutInput().generateName();
+        Random rnd = new Random();
+
+        return new Player(name, rnd.nextInt(101)).setPosition(Position.MIDFIELDER);
+    }
+
+    public static Player createPlayerDefender() throws FileNotFoundException {
+        String name = NameGenerator.createNameGeneratorWithoutInput().generateName();
+        Random rnd = new Random();
+
+        return new Player(name, rnd.nextInt(101)).setPosition(Position.DEFENDER);
+    }
+
+    public void setJerseyNum(int jerseyNum){ this.jerseyNum = jerseyNum;}
+    public Player setPosition(Position pos){
         this.pos = pos;
+        return this;
     }
 }
