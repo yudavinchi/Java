@@ -19,9 +19,22 @@ public class NameGenerator {
     public static NameGenerator createNameGeneratorWithoutInput() throws FileNotFoundException {
 
         rnd = new Random();
-        int pageNum = rnd.nextInt(2) + 1;
+        int num = rnd.nextInt(2) + 1;
 
-        File file = new File("src/main/java/org/day2/Names" + pageNum);
+        File file = new File("src/main/java/org/day2/txt/Names" + num);
+        Scanner sc = new Scanner(file);
+
+        ArrayList<String> lst = new ArrayList<>();
+
+        while (sc.hasNextLine())
+            lst.add(sc.nextLine());
+
+        return new NameGenerator(lst);
+    }
+
+    public static NameGenerator createFootballNameGeneratorWithoutInput() throws FileNotFoundException {
+
+        File file = new File("src/main/java/org/day2/txt/FootballNames");
         Scanner sc = new Scanner(file);
 
         ArrayList<String> lst = new ArrayList<>();
@@ -36,7 +49,7 @@ public class NameGenerator {
         return lst.get(index);
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        System.out.println(NameGenerator.createNameGeneratorWithoutInput().generateName());
+    public static void main(String[] args) {
+
     }
 }

@@ -1,58 +1,118 @@
 package org.day2;
 
-import com.github.javafaker.Faker;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.*;
 
 public class Team {
 
-    private final int numOfTeamPlayer = 11;
+    private static final int numOfTeamPlayers = 11;
     private String name;
-    private Player[] team;
+    private ArrayList<Player> team;
+    UniqueJerseyNumberGenerator uniqueJerseyNumberGenerator;
 
-    private HashMap<Position, Integer> positionMap = new HashMap<>();
-
-    public Team(String name){
-
+    public Team(String name) {
         this.name = name;
+        this.team = new ArrayList<>();
+        this.uniqueJerseyNumberGenerator = new UniqueJerseyNumberGenerator();
+    }
 
-        team = new Player[numOfTeamPlayer];
-        Set<Integer> jerseySet = new HashSet<>();
-        Random rnd = new Random();
-        int jerseyNum;
+    public static Team createTeamWithoutGivenFormation() throws FileNotFoundException {
 
-        for (int i = 0; i < numOfTeamPlayer; i++) {
+        Team team = new Team(NameGenerator.createFootballNameGeneratorWithoutInput().generateName());
+        FormationGenerator formationGenerator = new FormationGenerator();
+        team.setTeamFormation(formationGenerator.getFormationMap());
+        team.setTeamNumbers();
 
-            // generates unique jersey number
-//            do{
-//                jerseyNum = rnd.nextInt(upperBoundJerseyShirt);
-//            }
-//            while(!jerseySet.add(jerseyNum));
+        return team;
+    }
 
-            int grade = rnd.nextInt(101);
+    public static Team createTeamWithGivenFormation(HashMap<Position, Integer> formation) throws FileNotFoundException {
 
-            //team[i] = new Player(name, jerseyNum, grade);
+        Team team = new Team(NameGenerator.createFootballNameGeneratorWithoutInput().generateName());
+        team.setTeamFormation(formation);
+        team.setTeamNumbers();
+
+        return team;
+    }
+
+    private void setTeamFormation(HashMap<Position, Integer> formation) {
+
+        formation.forEach(((key, value) -> {
+            switch (key) {
+                case GOAL_KEEPER:
+                    for (int i = 0; i < value; i++) {
+                        try {
+                            team.add(Player.createPlayerGoalKeeper());
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    break;
+                case ATTACKER:
+                    for (int i = 0; i < value; i++) {
+                        try {
+                            team.add(Player.createPlayerAttacker());
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    break;
+                case MIDFIELDER:
+                    for (int i = 0; i < value; i++) {
+                        try {
+                            team.add(Player.createPlayerMidfielder());
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    break;
+                case DEFENDER:
+                    for (int i = 0; i < value; i++) {
+                        try {
+                            team.add(Player.createPlayerDefender());
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    break;
+            }
+        }));
+    }
+
+    private void setTeamNumbers()
+    {
+        for(Player player : team)
+        {
+            player.setJerseyNum(uniqueJerseyNumberGenerator.generateUniqueNumber());
         }
     }
 
-    public void print(){
-        for(Player player: team){
+
+
+    public void print() {
+        for (Player player : team) {
             System.out.println(player.name + " " + player.jerseyNum + " " + player.grade + " " + player.pos);
         }
     }
 
-    private void defineNumOfPositions(int goalKeeper, int attacker, int midfielder,  int defender){
-        positionMap.put(Position.GOAL_KEEPER, goalKeeper);
-        positionMap.put(Position.ATTACKER, attacker);
-        positionMap.put(Position.MIDFIELDER,midfielder);
-        positionMap.put(Position.DEFENDER, defender);
+    public void printDataOnFile() throws FileNotFoundException {
+
+        PrintWriter out = new PrintWriter("out.txt");
+
+        for (Player player : team) {
+            out.println(player.name + " " + player.jerseyNum + " " + player.grade + " " + player.pos);
+        }
+
+        out.close();
     }
 
-    public static void main(String[] args) {
-        Team team = new Team("Barcelona");
-        team.print();
+    public static void main(String[] args) throws FileNotFoundException {
+
+        HashMap<Position, Integer> formation = new HashMap<>();
+        formation.put(Position.GOAL_KEEPER, 2);
+        formation.put(Position.ATTACKER, 3);
+
+        Team.createTeamWithGivenFormation(formation).printDataOnFile();
     }
 }

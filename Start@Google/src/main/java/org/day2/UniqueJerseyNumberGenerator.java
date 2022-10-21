@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class UniqueJerseyNumber {
+public class UniqueJerseyNumberGenerator {
 
     private final int upperBoundJerseyShirt = 100;
     Set<Integer> jerseySet;
     Random rnd;
 
-    public UniqueJerseyNumber(){
+    public UniqueJerseyNumberGenerator(){
         jerseySet = new HashSet<>();
         rnd = new Random();
     }
@@ -28,7 +28,7 @@ public class UniqueJerseyNumber {
     }
 
     public static void main(String[] args) {
-        UniqueJerseyNumber uniqueJerseyNumber = new UniqueJerseyNumber();
+        UniqueJerseyNumberGenerator uniqueJerseyNumber = new UniqueJerseyNumberGenerator();
 
         System.out.println(uniqueJerseyNumber.generateUniqueNumber());
     }
