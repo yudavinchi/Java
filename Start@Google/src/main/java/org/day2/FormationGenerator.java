@@ -11,7 +11,7 @@ public class FormationGenerator {
     public FormationGenerator() {
 
         Random rnd = new Random();
-        int slotsLeft = 4;
+        int slotsLeft = 4; // 11 in total, and 7 are a must
         int slots;
 
         formationMap = new HashMap<>();

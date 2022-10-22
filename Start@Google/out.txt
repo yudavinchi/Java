@@ -1,5 +1,12 @@
-Katelyn 90 54 GOAL_KEEPER
-Felicia 39 76 GOAL_KEEPER
-Oscar 64 70 ATTACKER
-Shana 16 88 ATTACKER
-David 88 88 ATTACKER
+Team: Nevada Wolf Pack
+Player: Aaron, Jersey number: 62, Grade: 95, Position: GOAL_KEEPER
+Player: Luke, Jersey number: 1, Grade: 26, Position: DEFENDER
+Player: Ashleigh, Jersey number: 36, Grade: 64, Position: DEFENDER
+Player: Nichole, Jersey number: 55, Grade: 69, Position: DEFENDER
+Player: Danny, Jersey number: 21, Grade: 26, Position: MIDFIELDER
+Player: Brandon, Jersey number: 77, Grade: 43, Position: MIDFIELDER
+Player: Jennifer, Jersey number: 0, Grade: 6, Position: MIDFIELDER
+Player: Micheal, Jersey number: 83, Grade: 35, Position: ATTACKER
+Player: Andrew, Jersey number: 29, Grade: 62, Position: ATTACKER
+Player: Gregory, Jersey number: 97, Grade: 82, Position: ATTACKER
+Player: Jesse, Jersey number: 53, Grade: 35, Position: ATTACKER

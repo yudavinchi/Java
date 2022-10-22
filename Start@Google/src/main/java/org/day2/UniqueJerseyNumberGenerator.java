@@ -6,30 +6,24 @@ import java.util.Set;
 
 public class UniqueJerseyNumberGenerator {
 
-    private final int upperBoundJerseyShirt = 100;
     Set<Integer> jerseySet;
     Random rnd;
 
-    public UniqueJerseyNumberGenerator(){
+    public UniqueJerseyNumberGenerator() {
         jerseySet = new HashSet<>();
         rnd = new Random();
     }
 
-    public int generateUniqueNumber(){
+    public int generate() {
 
-        int jerseyNum;
+        int jerseyNum, upperBoundJerseyShirt = 100;
 
-        do{
+        do {
+
             jerseyNum = rnd.nextInt(upperBoundJerseyShirt);
         }
-        while(!jerseySet.add(jerseyNum));
+        while (!jerseySet.add(jerseyNum));
 
         return jerseyNum;
-    }
-
-    public static void main(String[] args) {
-        UniqueJerseyNumberGenerator uniqueJerseyNumber = new UniqueJerseyNumberGenerator();
-
-        System.out.println(uniqueJerseyNumber.generateUniqueNumber());
     }
 }
