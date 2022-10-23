@@ -1,12 +1,12 @@
-Team: Nevada Wolf Pack
-Player: Aaron, Jersey number: 62, Grade: 95, Position: GOAL_KEEPER
-Player: Luke, Jersey number: 1, Grade: 26, Position: DEFENDER
-Player: Ashleigh, Jersey number: 36, Grade: 64, Position: DEFENDER
-Player: Nichole, Jersey number: 55, Grade: 69, Position: DEFENDER
-Player: Danny, Jersey number: 21, Grade: 26, Position: MIDFIELDER
-Player: Brandon, Jersey number: 77, Grade: 43, Position: MIDFIELDER
-Player: Jennifer, Jersey number: 0, Grade: 6, Position: MIDFIELDER
-Player: Micheal, Jersey number: 83, Grade: 35, Position: ATTACKER
-Player: Andrew, Jersey number: 29, Grade: 62, Position: ATTACKER
-Player: Gregory, Jersey number: 97, Grade: 82, Position: ATTACKER
-Player: Jesse, Jersey number: 53, Grade: 35, Position: ATTACKER
+Team: Indiana Hoosiers
+Player: Joe, Jersey number: 36, Grade: 44, Position: GOAL_KEEPER
+Player: Brittney, Jersey number: 75, Grade: 4, Position: DEFENDER
+Player: Krista, Jersey number: 15, Grade: 33, Position: DEFENDER
+Player: Edward, Jersey number: 35, Grade: 94, Position: MIDFIELDER
+Player: Cody, Jersey number: 16, Grade: 30, Position: MIDFIELDER
+Player: Benjamin, Jersey number: 46, Grade: 88, Position: MIDFIELDER
+Player: Jeffrey, Jersey number: 72, Grade: 4, Position: ATTACKER
+Player: Larry, Jersey number: 51, Grade: 75, Position: ATTACKER
+Player: Melinda, Jersey number: 92, Grade: 39, Position: ATTACKER
+Player: Kenneth, Jersey number: 52, Grade: 100, Position: ATTACKER
+Player: Roger, Jersey number: 44, Grade: 28, Position: ATTACKER
