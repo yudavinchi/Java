@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Team: Indiana Hoosiers
 Player: Joe, Jersey number: 36, Grade: 44, Position: GOAL_KEEPER
 Player: Brittney, Jersey number: 75, Grade: 4, Position: DEFENDER
@@ -10,3 +11,17 @@ Player: Larry, Jersey number: 51, Grade: 75, Position: ATTACKER
 Player: Melinda, Jersey number: 92, Grade: 39, Position: ATTACKER
 Player: Kenneth, Jersey number: 52, Grade: 100, Position: ATTACKER
 Player: Roger, Jersey number: 44, Grade: 28, Position: ATTACKER
+=======
+Team: Oregon State Beavers
+Player: Rafael, Jersey number: 74, Grade: 95, Position: GOAL_KEEPER
+Player: Reginald, Jersey number: 29, Grade: 0, Position: DEFENDER
+Player: Anne, Jersey number: 61, Grade: 3, Position: DEFENDER
+Player: Garrett, Jersey number: 53, Grade: 80, Position: DEFENDER
+Player: Kara, Jersey number: 37, Grade: 18, Position: DEFENDER
+Player: Evan, Jersey number: 66, Grade: 30, Position: MIDFIELDER
+Player: Veronica, Jersey number: 83, Grade: 21, Position: MIDFIELDER
+Player: Megan, Jersey number: 58, Grade: 94, Position: MIDFIELDER
+Player: Desiree, Jersey number: 41, Grade: 64, Position: MIDFIELDER
+Player: Jenny, Jersey number: 70, Grade: 11, Position: ATTACKER
+Player: Abigail, Jersey number: 38, Grade: 13, Position: ATTACKER
+>>>>>>> b03598e81883a9e2773f97113580f90f33046453
