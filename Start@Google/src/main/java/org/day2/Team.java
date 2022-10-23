@@ -1,5 +1,7 @@
 package org.day2;
 
+import org.utilities.NameGenerator;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.*;

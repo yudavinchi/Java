@@ -1,7 +1,8 @@
 package org.day2;
 
+import org.utilities.NameGenerator;
+
 import java.io.FileNotFoundException;
-import java.util.Objects;
 import java.util.Random;
 
 public class Player {

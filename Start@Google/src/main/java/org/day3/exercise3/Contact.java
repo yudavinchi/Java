@@ -2,12 +2,13 @@ package org.day3.exercise3;
 
 import java.util.Objects;
 
-public class Contact implements Cloneable{
+public class Contact implements Cloneable, Comparable<Contact> {
     Name name;
     PhoneNumber phoneNumber;
 
-    public Contact(Name name) {
+    public Contact(Name name, PhoneNumber phoneNumber) {
         this.name = name;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
@@ -31,17 +32,27 @@ public class Contact implements Cloneable{
                 '}';
     }
 
-    public int compareTo(Contact contact){
+    @Override
+    public int compareTo(Contact contact) {
         int result = name.compareTo(contact.name);
-        if(result == 0){
+        if (result == 0) {
             result = phoneNumber.compareTo(contact.phoneNumber);
             return result;
         }
         return result;
     }
 
+
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    protected Contact clone() throws CloneNotSupportedException {
+        try {
+            Contact clone = (Contact) super.clone();
+            clone.name = new Name(name);
+            clone.phoneNumber = new PhoneNumber(phoneNumber);
+
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

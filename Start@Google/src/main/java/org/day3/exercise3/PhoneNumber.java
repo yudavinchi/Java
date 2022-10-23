@@ -2,12 +2,17 @@ package org.day3.exercise3;
 
 import java.util.Objects;
 
-public class PhoneNumber implements Cloneable {
+public class PhoneNumber implements Cloneable, Comparable<PhoneNumber> {
     String areaCode, number;
 
     public PhoneNumber(String areaCode, String number) {
         this.areaCode = areaCode;
         this.number = number;
+    }
+
+    public PhoneNumber(PhoneNumber phoneNumber){
+        this.areaCode = phoneNumber.areaCode;
+        this.number = phoneNumber.number;
     }
 
     @Override
@@ -31,6 +36,7 @@ public class PhoneNumber implements Cloneable {
                 '}';
     }
 
+    @Override
     public int compareTo(PhoneNumber phoneNumber) {
         int result = areaCode.compareTo(phoneNumber.areaCode);
         if (result == 0) {
@@ -39,19 +45,6 @@ public class PhoneNumber implements Cloneable {
         }
         return -1;
     }
-
-    /*
-    @Override
-    protected Song clone() {
-        try {
-            Song clone = (Song) super.clone();
-            clone.notes = new ArrayList<>(notes);
-            return clone;
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-     */
 
     @Override
     protected PhoneNumber clone() throws CloneNotSupportedException {

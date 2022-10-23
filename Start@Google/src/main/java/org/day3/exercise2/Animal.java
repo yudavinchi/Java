@@ -13,4 +13,9 @@ The Animal has this functionality:
 
 public interface Animal {
     public void move();
+    public Animal mate(Animal partner);
+
+    public Gender getGender();
+
+    public int getId();
 }

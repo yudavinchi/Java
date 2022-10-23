@@ -1,4 +1,4 @@
-package org.day2;
+package org.utilities;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,7 +21,7 @@ public class NameGenerator {
             rnd = new Random();
             int num = rnd.nextInt(2) + 1;
 
-            File file = new File("src/main/java/org/day2/txt/Names" + num);
+            File file = new File("src/main/java/org/utilities/txt/Names" + num);
             Scanner sc = new Scanner(file);
 
             ArrayList<String> lst = new ArrayList<>();

@@ -1,8 +1,9 @@
 package org.day3.exercise3;
 
+import java.util.HashMap;
 import java.util.Objects;
 
-public class Name implements Cloneable {
+public class Name implements Cloneable, Comparable<Name> {
     Prefix prefix;
     String firstName, lastName;
 
@@ -10,6 +11,12 @@ public class Name implements Cloneable {
         this.prefix = prefix;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Name(Name name){
+        this.prefix = name.prefix;
+        this.firstName = name.firstName;
+        this.lastName = name.lastName;
     }
 
     @Override
@@ -34,6 +41,7 @@ public class Name implements Cloneable {
                 '}';
     }
 
+    @Override
     public int compareTo(Name name) {
         int result = prefix.label.compareTo(name.prefix.label);
         if (result == 0) {
@@ -50,6 +58,59 @@ public class Name implements Cloneable {
 
     @Override
     protected Name clone() throws CloneNotSupportedException {
-        Name clone = super.clone();
+        try {
+            Name clone = (Name) super.clone();
+            clone.prefix = prefix;
+            clone.firstName = new String(firstName);
+            clone.lastName = new String(lastName);
+
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void main(String[] args) {
+        Name name1 = new Name(Prefix.Dr, "David", "Yudin");
+        System.out.println(name1.toString());
+
+        Name name2 = new Name(Prefix.Dr, "David", "Yudin");
+
+        if(name1.equals(name2)) {
+            System.out.println("Equal");
+        }
+        else{
+            System.out.println("Not Equal");
+        }
+
+        HashMap<Name, String> test = new HashMap<>();
+        test.put(name1, "test1");
+        test.put(name2, "test2");
+
+        System.out.println(test.toString());
+
+        Name name3 = null;
+
+        try{
+            name3 = name1.clone();
+        }
+        catch (CloneNotSupportedException e){
+            System.out.println("Clone didn't succeed");
+        }
+
+        System.out.println(Objects.requireNonNull(name3).toString());
+
+        if(name1.equals(name3)) {
+            System.out.println("Equal");
+        }
+        else{
+            System.out.println("Not Equal");
+        }
+
+        System.out.println(name1 == name3);
+
+        Name name4 = new Name(Prefix.Dr, "David", "Yudin");
+
+        System.out.println(name1.compareTo(name4));
     }
 }
