@@ -25,5 +25,13 @@ public class UniqueIdGeneretor {
 
         return id;
     }
+
+    public void remove(int id) {
+        idSet.remove(id);
+    }
+
+    public boolean exists(int id){
+        return idSet.contains(id);
+    }
 }
 
