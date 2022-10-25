@@ -23,30 +23,25 @@ package org.day4.exercise1;
  */
 
 public class Main {
-
-
     public static void main(String[] args) {
+
         Store store = new Store();
-        User user1 = new User();
-        User user2 = new User();
 
-        store.assignCoupon(user1);
-        store.assignCoupon(user1);
-        store.assignCoupon(user1);
+        User user = new User();
 
-        store.assignCoupon(user2);
-
-        user1.print();
-        user2.print();
-
+        for (int i = 0; i < 5; i++) {
+            store.assignCoupon(user);
+        }
+        System.out.println("-----------------------");
+        user.print();
         System.out.println("-----------------------");
 
-        store.useCoupon(user1, user1.getCouponByExpiresFirst().get());
-
-        user1.print();
-        user2.print();
-
+        store.useCouponByExpiresFirst(user);
+        store.useCouponByHighestValue(user);
+        store.useCouponById(user, 123); // 123 doesn't exist
+        store.useCouponByRandom(user);
+        System.out.println("-----------------------");
+        user.print();
         System.out.println("-----------------------");
     }
-
 }

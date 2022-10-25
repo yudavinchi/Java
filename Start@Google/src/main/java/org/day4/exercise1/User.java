@@ -5,6 +5,7 @@ import com.github.javafaker.Faker;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class User {
     String name;
@@ -32,30 +33,6 @@ public class User {
         return Optional.empty();
     }
 
-    public Optional<Coupon> getCouponByExpiresFirst() {
-
-        if (!coupons.isEmpty()) {
-            LocalDate expiresSoonDate = java.time.LocalDate.now();
-            ArrayList<Integer> tempValues = new ArrayList<>();
-
-            for (Coupon coupon : coupons) {
-                tempValues.add(coupon.getExpiryDate().compareTo(expiresSoonDate));
-            }
-
-            int min = tempValues.get(0);
-            Coupon tempCoupon = coupons.get(0);
-
-            for (int i = 1; i < tempValues.size(); i++) {
-                if (tempValues.get(i) < min) {
-                    min = tempValues.get(i);
-                    tempCoupon = coupons.get(i);
-                }
-            }
-            return Optional.of(tempCoupon);
-        }
-        return Optional.empty();
-    }
-
     public Optional<Coupon> getCouponByHighestValue() {
         double max = -1;
         Coupon temp = null;
@@ -67,6 +44,37 @@ public class User {
             }
         }
         return Optional.ofNullable(temp);
+    }
+
+    public Optional<Coupon> getCouponByExpiresFirst() {
+
+        LocalDate todaysDate = LocalDate.now();
+        Coupon temp = null;
+
+        if (!coupons.isEmpty()) {
+
+            int i = 0;
+
+            for (; i < coupons.size(); i++) {
+                if (coupons.get(i).getExpiryDate().isAfter(todaysDate)) {
+                    temp = coupons.get(i);
+                    break;
+                }
+            }
+
+            for (; i < coupons.size(); i++) {
+                if (coupons.get(i).getExpiryDate().isAfter(todaysDate) &&
+                    coupons.get(i).getExpiryDate().isBefore(temp.getExpiryDate())) {
+                    temp = coupons.get(i);
+                }
+            }
+            return Optional.of(temp);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Coupon> getCouponByRandom() {
+        return Optional.ofNullable(coupons.get(ThreadLocalRandom.current().nextInt(coupons.size())));
     }
 
     public void add(Coupon coupon) {
