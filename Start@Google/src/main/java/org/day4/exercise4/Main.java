@@ -20,12 +20,14 @@ public class Main {
             }
         };
 
-
         Optional<?> result = retry(integerCallable, 5, 1000L);
-        System.out.println(result.get());
+        if(result.isPresent())
+            System.out.println(result.get());
+
 
         result = retry(doubleCallable, 5.0, 5);
-        System.out.println(result.get());
+        if(result.isPresent())
+            System.out.println(result.get());
     }
 
     public static <T> Optional<T> retry(Callable<T> action, T expectedResult) {
@@ -53,14 +55,11 @@ public class Main {
                     System.out.println("Found!");
                     return Optional.of(value);
                 }
-
-            } catch (Exception e) {
-                System.out.println("Something went wrong");
-            }
-            try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
-                System.out.println(e);
+                System.out.println("Thread has interrupted");
+            } catch (Exception e) {
+                System.out.println("Something went wrong");
             }
         }
         return Optional.ofNullable(value);
