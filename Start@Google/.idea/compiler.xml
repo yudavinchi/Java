@@ -7,7 +7,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Start@Google" />
       </profile>
       <profile name="Annotation profile for temp2" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -100,12 +99,13 @@
           <entry name="$MAVEN_REPOSITORY$/org/jspecify/jspecify/0.2.0/jspecify-0.2.0.jar" />
         </processorPath>
         <module name="temp2" />
+        <module name="Start@Google" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="temp2" options="-XDcompilePolicy=simple -Xplugin:ErrorProne" />
+      <module name="Start@Google" options="-XDcompilePolicy=simple -Xplugin:ErrorProne" />
     </option>
   </component>
 </project>

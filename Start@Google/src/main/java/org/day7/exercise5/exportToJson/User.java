@@ -1,6 +1,6 @@
-package org.day7.day4.exportToJson;
+package org.day7.exercise5.exportToJson;
 
-public class User implements Data{
+public class User implements Data {
     private int id;
     private String name;
     private String password;
@@ -9,6 +9,18 @@ public class User implements Data{
         this.id = id;
         this.name = name;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override
