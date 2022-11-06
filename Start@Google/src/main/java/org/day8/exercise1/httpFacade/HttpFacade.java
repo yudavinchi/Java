@@ -20,13 +20,12 @@ import java.util.Map;
 
 public class HttpFacade {
 
-    public static Map<String, Object> get(String url) {
+    public static Response get(String url) {
 
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet(url);
 
             try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
-                System.out.println(response.getCode() + " " + response.getReasonPhrase());
                 HttpEntity entity = response.getEntity();
                 String json = EntityUtils.toString(entity);
 
@@ -35,7 +34,7 @@ public class HttpFacade {
 
                 EntityUtils.consume(entity);
 
-                return map;
+                return new Response(response.getCode(), map);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
@@ -44,7 +43,7 @@ public class HttpFacade {
         }
     }
 
-    public static Map<String, Object> post(String url, List<NameValuePair> nvps) {
+    public static Response post(String url, List<NameValuePair> nvps) {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
 
             HttpPost httpPost = new HttpPost(url);
@@ -52,7 +51,6 @@ public class HttpFacade {
             httpPost.setEntity(new UrlEncodedFormEntity(nvps, StandardCharsets.UTF_8));
 
             try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
-                System.out.println(response.getCode() + " " + response.getReasonPhrase());
                 HttpEntity entity = response.getEntity();
                 String json = EntityUtils.toString(entity);
 
@@ -61,7 +59,7 @@ public class HttpFacade {
 
                 EntityUtils.consume(entity);
 
-                return map;
+                return new Response(response.getCode(), map);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
@@ -70,7 +68,7 @@ public class HttpFacade {
         }
     }
 
-    public static Map<String, Object> put(String url, List<NameValuePair> nvps) {
+    public static Response put(String url, List<NameValuePair> nvps) {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
 
             HttpPut httpPut = new HttpPut(url);
@@ -78,7 +76,6 @@ public class HttpFacade {
             httpPut.setEntity(new UrlEncodedFormEntity(nvps, StandardCharsets.UTF_8));
 
             try (CloseableHttpResponse response = httpclient.execute(httpPut)) {
-                System.out.println(response.getCode() + " " + response.getReasonPhrase());
                 HttpEntity entity = response.getEntity();
                 String json = EntityUtils.toString(entity);
 
@@ -87,7 +84,7 @@ public class HttpFacade {
 
                 EntityUtils.consume(entity);
 
-                return map;
+                return new Response(response.getCode(), map);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {
@@ -98,7 +95,7 @@ public class HttpFacade {
         }
     }
 
-    public static Map<String, Object> patch(String url, List<NameValuePair> nvps) {
+    public static Response patch(String url, List<NameValuePair> nvps) {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
 
             HttpPatch httpPatch = new HttpPatch(url);
@@ -106,7 +103,6 @@ public class HttpFacade {
             httpPatch.setEntity(new UrlEncodedFormEntity(nvps, StandardCharsets.UTF_8));
 
             try (CloseableHttpResponse response = httpclient.execute(httpPatch)) {
-                System.out.println(response.getCode() + " " + response.getReasonPhrase());
                 HttpEntity entity = response.getEntity();
                 String json = EntityUtils.toString(entity);
 
@@ -115,7 +111,7 @@ public class HttpFacade {
 
                 EntityUtils.consume(entity);
 
-                return map;
+                return new Response(response.getCode(), map);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
@@ -124,36 +120,49 @@ public class HttpFacade {
         }
     }
 
-    public static Map<String, Object> delete(String url) {
-        return null;
+    public static Response delete(String url) {
+        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+            HttpDelete httpDelete = new HttpDelete(url);
+
+            try (CloseableHttpResponse response = httpclient.execute(httpDelete)) {
+                return new Response(response.getCode(), null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-
     public static void main(String[] args) throws IOException {
-        HttpFacade httpFacade = new HttpFacade();
 
+        // get
         String url = "https://reqres.in/api/users?page=2";
+        Response response = HttpFacade.get(url);
+        System.out.println("Get: " + response.toString());
 
-        Map<String, Object> map = httpFacade.get(url);
-
+        // post
         url = "https://reqres.in/api/users";
-
         List<NameValuePair> nvps = new ArrayList<>();
         nvps.add(new BasicNameValuePair("name", "morpheus"));
         nvps.add(new BasicNameValuePair("job", "secret"));
+        response = HttpFacade.post(url, nvps);
+        System.out.println("Post: " + response.toString());
 
-        map = httpFacade.post(url, nvps);
-
+        // put
         url = "https://reqres.in/api/users/2";
-
         nvps.clear();
         nvps.add(new BasicNameValuePair("name", "morpheus"));
         nvps.add(new BasicNameValuePair("job", "zion resident"));
+        response = HttpFacade.put(url, nvps);
+        System.out.println("Put: " + response.toString());
 
-        map = httpFacade.put(url, nvps);
+        // patch
+        response = HttpFacade.patch(url, nvps);
+        System.out.println("Patch: " + response.toString());
 
-        map = httpFacade.patch(url, nvps);
-
-        map = httpFacade.delete(url);
+        // delete
+        response = HttpFacade.delete(url);
+        System.out.println("Delete: " + response.toString());
     }
 }

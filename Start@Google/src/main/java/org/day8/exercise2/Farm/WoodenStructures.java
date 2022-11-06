@@ -4,5 +4,5 @@ public interface WoodenStructures {
 
     public void roll();
 
-    public void replicate();
+    public WoodenStructures replicate();
 }
