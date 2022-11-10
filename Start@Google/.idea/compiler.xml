@@ -103,14 +103,9 @@
       </profile>
     </annotationProcessing>
   </component>
-  <component name="ErrorProneCompilerSettings">
-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Start@Google" options="" />
-    </option>
-  </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Start@Google" options="-XDcompilePolicy=simple -Xplugin:ErrorProne" />
+      <module name="temp2" options="-XDcompilePolicy=simple -Xplugin:ErrorProne" />
     </option>
   </component>
 </project>
