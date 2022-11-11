@@ -7,10 +7,7 @@ import org.day9.service.AuthService;
 import org.day9.utils.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -26,9 +23,10 @@ public class AuthController {
         System.out.println("hello");
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public void register(String email, String name, String password) throws IllegalArgumentException {
+    @RequestMapping(value = "register", method = RequestMethod.POST, consumes = "application/json")
+    public void register(@RequestParam(value="email") String email, @RequestParam(value="name") String name, @RequestParam(value="password") String password) throws IllegalArgumentException {
         logger.trace("enter to registration function");
+        System.out.println(email + " " +  name + " " + password);
         boolean isValidateUser = validateUser(email, name, password);
 
         logger.debug("user validation is: " + isValidateUser);
