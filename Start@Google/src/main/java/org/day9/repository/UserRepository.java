@@ -13,14 +13,15 @@ import java.util.Map;
 @Repository
 public class UserRepository {
 
-    private static Map<Integer, User> users = new HashMap<>();     // cache
+    private Map<Integer, User> users;   // cache
 
-    private static final String BASE_ROUTE = "src/main/java/org/day9/repository";
+    private final String BASE_ROUTE = "src/main/java/org/day9/repository/users";
 
     private static Logger logger = LogManager.getLogger(UserRepository.class.getName());
 
-    public UserRepository(){
+    public UserRepository() {
         users = new HashMap<>();
+        cacheUsersFilesFromRepo();
     }
 
     public void writeUserToDb(User user) {
@@ -38,40 +39,26 @@ public class UserRepository {
         users.put(user.getId(), user);
     }
 
-    public static void removeUserFromDb(int id) {
-        logger.trace("enter to writeUserToDb function");
+    public void removeUserFromDb(int id) {
         String filename = BASE_ROUTE + "/" + id + ".json";
-        Files.removeFile(filename);
-
-        logger.debug("user with id: " + id + " has been removed");
+        Files.removeFromFile(filename);
         users.remove(id);
     }
 
-    public static User getUserById(Integer id) {
-        try {
-            logger.debug("user with id: " + id + " has been returned");
-            return users.get(id);
-        } catch (NullPointerException e) {
-            logger.warn(e);
-        }
-        logger.warn("null has been returned");
-        return null;
+    public User getUserById(Integer id) {
+        return users.get(id);
     }
 
-    public static User getUserByEmail(String email) {
-        logger.trace("enter to getUserByEmail function");
+    public User getUserByEmail(String email) {
         for (Integer i : users.keySet()) {
             if (users.get(i).getEmail().equals(email)) {
-                logger.debug("user with email: " + email + " has been returned");
                 return users.get(i);
             }
         }
-        logger.warn("null has been returned");
         return null;
     }
 
-    private static Map<Integer, User> cacheUsersFilesFromRepo() {
-        logger.trace("enter to cacheUsersFilesFromRepo function");
+    private void cacheUsersFilesFromRepo() {
 
         File folder = new File(BASE_ROUTE);
         File[] listOfFiles = folder.listFiles();
@@ -82,15 +69,5 @@ public class UserRepository {
             HashMap<String, String> fileContent = Files.readFromFile(filename + listOfFiles[i].getName());
             users.put(Integer.valueOf(fileContent.get("id")), new User(fileContent.get("email"), fileContent.get("name"), fileContent.get("password")));
         }
-        return users;
-    }
-
-    public static void main(String[] args) {
-        UserRepository userRepository = new UserRepository();
-
-        User user1 = new User("yudin.david@gmail.com", "david", "321ewqdsacxz");
-        User user2 = new User("saliman.rany@gmail.com", "rany", "maniak");
-        userRepository.writeUserToDb(user1);
-        userRepository.writeUserToDb(user2);
     }
 }

@@ -1,7 +1,5 @@
 package org.day9.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.day9.entity.User;
 import org.day9.repository.UserRepository;
 
@@ -24,22 +22,30 @@ public class AuthService {
         mapUserTokens = new HashMap<>();
     }
 
-    public void createNewUser(String email, String name, String password) throws IllegalArgumentException {
+    public User register(String email, String name, String password) {
+
         User userExist = userRepository.getUserByEmail(email);
+
         if (userExist != null) {
-            throw new IllegalArgumentException("The user already exists");
+            return null;
         }
+
         User newUser = new User(email, name, password);
         userRepository.writeUserToDb(newUser);
+        return newUser;
     }
 
-    public String loginUser(String email, String password) {
+    public String login(String email, String password) {
+
         User user = userRepository.getUserByEmail(email);
-        if (!user.getPassword().equals(password)) {
-            throw new NullPointerException("user's email or password don't match");
+
+        if (user == null || !user.getPassword().equals(password)) {
+            return null;
         }
+
         String token = generateUniqueToken();
         mapUserTokens.put(token, String.valueOf(user.getId()));
+
         return token;
     }
 
@@ -48,25 +54,21 @@ public class AuthService {
         StringBuilder token = new StringBuilder();
         long currentTimeInMilisecond = Instant.now().toEpochMilli();
 
-        return token.append(currentTimeInMilisecond).append("-")
-                .append(UUID.randomUUID().toString()).toString();
+        return token.append(currentTimeInMilisecond).append("-").append(UUID.randomUUID()).toString();
     }
 
     private Map<String, String> getMapUserTokens() {
         return mapUserTokens;
     }
 
-    public Integer getUserId(String token) throws NullPointerException {
+    public Integer getUserId(String token) {
+
         String id = getMapUserTokens().get(token);
 
         if (id == null) {
-            throw new NullPointerException();
+            return null;
         }
-        return Integer.valueOf(id);
-    }
 
-    public static void main(String[] args) {
-        AuthService authService = new AuthService();
-        authService.createNewUser("yudin.david@gmail.com", "david", "321ewqdsacxz");
+        return Integer.valueOf(id);
     }
 }

@@ -1,13 +1,14 @@
 package org.day9.controller;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.day9.entity.User;
 import org.day9.service.AuthService;
 import org.day9.utils.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
@@ -16,59 +17,40 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    private static Logger logger = LogManager.getLogger(AuthController.class.getName());
+    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<User> register(@RequestBody Map<String, String> map) {
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public void test(String email, String name, String password) throws IllegalArgumentException {
-        System.out.println("hello");
-    }
+        User temp = new User(map.get("email"), map.get("name"), map.get("password"));
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, consumes = "application/json")
-    public void register(@RequestParam(value="email") String email, @RequestParam(value="name") String name, @RequestParam(value="password") String password) throws IllegalArgumentException {
-        logger.trace("enter to registration function");
-        System.out.println(email + " " +  name + " " + password);
-        boolean isValidateUser = validateUser(email, name, password);
+        boolean isValidateUser = Validate.registerFields(temp.getEmail(), temp.getName(), temp.getPassword());
 
-        logger.debug("user validation is: " + isValidateUser);
         if (!isValidateUser) {
-            logger.warn("input is not valid, registration failed");
-            throw new IllegalArgumentException("input is not valid, registration failed");
+            return ResponseEntity.badRequest().build();
         }
 
-        try {
-            authService.createNewUser(email, name, password);
-        } catch (NullPointerException nullPointerException) {
-            System.out.println(nullPointerException);
+        User user = authService.register(temp.getEmail(), temp.getName(), temp.getPassword());
+
+        if (user == null) {
+            return ResponseEntity.badRequest().build();
         }
-    }
 
-    public String login(String email, String password) throws IllegalArgumentException {
-        logger.trace("enter to login function");
-        boolean isValidateLoginFields = validateLoginFields(email, password);
-
-        logger.debug("login fields validations are: " + isValidateLoginFields);
-        if (!isValidateLoginFields) {
-            logger.warn("input is not valid, login failed");
-            throw new IllegalArgumentException("input is not valid, login failed");
-        }
-        return authService.loginUser(email, password);
-    }
-
-    private boolean validateUser(String email, String name, String password) {
-        logger.trace("enter to validateUser function");
-        boolean isEmailValid = Validate.email(email);
-        boolean isNameValid = Validate.name(name);
-        boolean isPasswordValid = Validate.password(password);
-
-        return isEmailValid && isNameValid && isPasswordValid;
+        return ResponseEntity.ok(temp);
     }
 
 
-    private boolean validateLoginFields(String email, String password) {
-        logger.trace("enter to validateLoginFields function");
-        boolean isEmailValid = Validate.email(email);
-        boolean isPasswordValid = Validate.password(password);
+    @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<User> login(@RequestBody User temp) {
 
-        return isEmailValid && isPasswordValid;
+        if (!Validate.loginFields(temp.getEmail(), temp.getPassword())) {
+            return ResponseEntity.notFound().build();
+        }
+
+        String token = authService.login(temp.getEmail(), temp.getPassword());
+
+        if (token == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().header("token", token).build();
     }
 }

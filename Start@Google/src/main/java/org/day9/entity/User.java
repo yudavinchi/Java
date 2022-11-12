@@ -9,6 +9,9 @@ public class User {
     private String name;
     private String password;
 
+    public User() {
+    }
+
     public User(String email, String name, String password) {
         id = generateUniqueId();
         this.email = email;
@@ -25,14 +28,26 @@ public class User {
     }
 
     public String getEmail() {
-        return email;
+        return new String(email);
     }
 
     public String getName() {
-        return name;
+        return new String(name);
     }
 
     public String getPassword() {
-        return password;
+        return new String(password);
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

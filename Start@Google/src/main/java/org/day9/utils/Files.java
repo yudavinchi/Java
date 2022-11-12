@@ -38,7 +38,7 @@ public class Files {
         return null;
     }
 
-    public static void removeFile(String filename){
+    public static void removeFromFile(String filename){
         try{
             File file = new File(filename);
             if (file.delete()) {
